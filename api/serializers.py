@@ -1,8 +1,9 @@
 from rest_framework import serializers
 
+from books.models import Book
 
-class BookSerializer(serializers.Serializer):
-    label = serializers.CharField(max_length=30)
-    author = serializers.CharField(max_length=30)
-    year = serializers.IntegerField()
-    genre = serializers.CharField(max_length=30)
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = '__all__'
