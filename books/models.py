@@ -71,4 +71,29 @@ class Purchase(models.Model):
     def __str__(self):
         return f"Книга {self.book} в списке покупок у {self.user}"
 
+class Favorite(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="В избранном",
+        related_name="favorites",
+    )
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        verbose_name="Избранная книга",
+        related_name="favorites",
+    )
 
+    class Meta:
+        verbose_name = "Избранный"
+        verbose_name_plural = "Избранные"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "book"],
+                name="unique_favorite_book",
+            )
+        ]
+
+    def __str__(self):
+        return f"Книга {self.book} в избранном у {self.user}"
